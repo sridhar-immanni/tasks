@@ -1,0 +1,26 @@
+FROM ubuntu:18.04
+MAINTAINER "Sridhar"
+ENV DEBIAN_FRONTEND=noninteractive 
+RUN apt-get update && \ 
+apt-get -q -y install apache2 \
+unzip \ 
+php7.2-cli \ 
+php7.2-mysql \
+php7.2-json \
+php7.2-opcache \
+php7.2-mbstring \
+php7.2-intl \
+php7.2-xml \
+php7.2-gd  \
+php7.2-zip \
+php7.2-curl \
+php7.2-xmlrpc \
+php7.2-xmlrpc \
+php7.2 \ 
+ADD https://downloads.joomla.org/cms/joomla3/3-9-4/Joomla_3-9-4-Stable-Full_Package.zip /tmp 
+RUN unzip Joomla_3-9-4-Stable-Full_Package.zip -C /tmp \ 
+&& cp -R /tmp/Joomla*/* /var/www/html 
+RUN rm /var/www/html/index.html && \ 
+chown -R www-data:www-data /var/www/html 
+EXPOSE 80 
+CMD ["/bin/bash","-c","service apache2 start"]
